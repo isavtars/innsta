@@ -12,6 +12,7 @@ const double kBody1 = 3;
 const double kBody2 = 2.5;
 
 const Color kBackGroundColor = Color(0xffF2F2F2);
+const Color kWhite = Color(0xffffffff);
 
 const Color kDarkBackGroundColor = Color(0xff000000);
 const Color kPrimarybackGround = Color(0xff3797EF);
