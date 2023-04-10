@@ -10,7 +10,7 @@ class ThemeChange extends ChangeNotifier {
   bool get darkTheme => _darkTheme;
 
   ThemeChange() {
-    _darkTheme = true;
+    _darkTheme = false;
     _loadFromPrefs();
   }
 
@@ -21,7 +21,7 @@ class ThemeChange extends ChangeNotifier {
   }
 
   _initPrefs() async {
-     _prefs = await SharedPreferences.getInstance();
+    _prefs = await SharedPreferences.getInstance();
   }
 
   _loadFromPrefs() async {

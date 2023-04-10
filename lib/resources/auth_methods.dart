@@ -14,6 +14,19 @@ class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+
+   // get user details
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot documentSnapshot =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(documentSnapshot);
+  }
+
+
+
   //sign up user
   Future<String> signUpUser({
     required String email,
@@ -97,4 +110,10 @@ class AuthMethods {
   }
 
   //signin with google
+
+  //logout
+
+  Future<void> logOut() async {
+    _auth.signOut();
+  }
 }

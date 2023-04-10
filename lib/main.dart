@@ -11,6 +11,7 @@ import 'responsive/rewsponsive_layout.dart';
 import 'responsive/web_scrren_layout.dart';
 import 'screen/home_screen.dart';
 import 'screen/register_screen.dart';
+import 'provider/user_provider.dart';
 
 import 'utils/thems.dart';
 //firebase
@@ -33,10 +34,9 @@ void main() async {
     await Firebase.initializeApp();
   }
 
-  runApp(ChangeNotifierProvider(
-    create: (_) => ThemeChange(),
-    child: const MyApp(),
-  ));
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -47,75 +47,59 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeChange>(
-      builder: (context, themdatap, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "instagram clone",
-          theme: themdatap.darkTheme ? kLightThems : kdarkThems,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeChange())
+      ],
+      child: Consumer<ThemeChange>(
+        builder: (context, themdatap, child) {
+          debugPrint('${themdatap.darkTheme}');
 
-          // initialRoute: "/login",
-          routes: {
-            "/home": (context) => const HomeScreen(),
-            "/login": (context) => const LoginScreen(),
-            "/signup": (context) => const RegisterScreen(),
-          },
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                // Checking if the snapshot has any data or not
-                if (snapshot.hasData) {
-                  // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-                  return const ResponsiveLayout(
-                    mobileScreenLayout: MobileScreenLayout(),
-                    webScreenLayout: WebScreenLayout(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: "instagram clone",
+            theme: themdatap.darkTheme ? kLightThems : kdarkThems,
+
+            // initialRoute: "/login",
+            routes: {
+              "/home": (context) => const HomeScreen(),
+              "/login": (context) => const LoginScreen(),
+              "/signup": (context) => const RegisterScreen(),
+            },
+            home: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  // Checking if the snapshot has any data or not
+                  if (snapshot.hasData) {
+                    // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
+                    return const ResponsiveLayout(
+                      mobileScreenLayout: MobileScreenLayout(),
+                      webScreenLayout: WebScreenLayout(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('${snapshot.error}'),
+                    );
+                  }
+                }
+
+                // means connection to future hasnt been made yet
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 }
-              }
 
-              // means connection to future hasnt been made yet
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              return const LoginScreen();
-            },
-          ),
-        );
-      },
+                return const LoginScreen();
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
-
-// class MyHome extends StatelessWidget {
-//   const MyHome({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Container(
-//             padding: const EdgeInsets.only(top: 54),
-//             child: Column(children: [
-//               const Text("heloo bibek"),
-//               Consumer<ThemeChange>(
-//                 builder: (context, themedataValue, child) {
-//                   return Switch(
-//                       value: themedataValue.darkTheme,
-//                       onChanged: (value) {
-//                         themedataValue.toggleTheme();
-//                       });
-//                 },
-//               )
-//             ])));
-//   }
-// }
