@@ -19,7 +19,7 @@ class User {
     required this.username,
   });
 
-//to jasons methods
+//to Jsons methods
   Map<String, dynamic> toJson() => {
         "username": username,
         "uid": uid,

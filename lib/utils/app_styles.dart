@@ -19,6 +19,13 @@ const Color kPrimarybackGround = Color(0xff3797EF);
 const Color kPrimarydarkText = Color(0xffFFFFff);
 const Color kPrimarylightText = Color(0xff262626);
 
+const mobileBackgroundColor = Color.fromRGBO(34, 33, 33, 1);
+const webBackgroundColor = Color.fromRGBO(34, 33, 33, 1);
+const mobileSearchColor = Color.fromRGBO(38, 38, 38, 1);
+const blueColor = Color.fromRGBO(0, 149, 246, 1);
+const primaryColor = Colors.white;
+const secondaryColor = Colors.grey;
+
 const webScreenSize = 600;
 
 final kJakartaHeading1 = GoogleFonts.plusJakartaSans(

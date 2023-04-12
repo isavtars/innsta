@@ -14,26 +14,20 @@ class WebScreenLayout extends StatefulWidget {
 
 class _WebScreenLayoutState extends State<WebScreenLayout> {
   @override
-  void initState() {
-    addDatta();
-    super.initState();
-  }
-
-  addDatta() async {
-    UserProvider _userProvider = Provider.of(context, listen: false);
-    await _userProvider.refreshUser();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
-    model.User user = Provider.of<UserProvider>(context).getUser;
+
+  
+    
     return Scaffold(
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(user.username),
+           
             MaterialButton(
               onPressed: () async {
                 await AuthMethods().logOut();

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/user_provider.dart';
 import '../utils/app_styles.dart';
-
 
 class ResponsiveLayout extends StatefulWidget {
   final Widget mobileScreenLayout;
@@ -17,7 +20,15 @@ class ResponsiveLayout extends StatefulWidget {
 }
 
 class _ResponsiveLayoutState extends State<ResponsiveLayout> {
- 
+  void initState() {
+    addDatta();
+    super.initState();
+  }
+
+  addDatta() async {
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    await _userProvider.refreshUser();
+  }
 
   @override
   Widget build(BuildContext context) {

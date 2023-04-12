@@ -75,6 +75,7 @@ class _MyAppState extends State<MyApp> {
                 if (snapshot.connectionState == ConnectionState.active) {
                   // Checking if the snapshot has any data or not
                   if (snapshot.hasData) {
+                    debugPrint(snapshot.hasData.toString());
                     // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
                     return const ResponsiveLayout(
                       mobileScreenLayout: MobileScreenLayout(),

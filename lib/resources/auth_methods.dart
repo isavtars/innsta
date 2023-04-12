@@ -14,8 +14,7 @@ class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-
-   // get user details
+  // get user details Reads
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
 
@@ -25,8 +24,6 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
-
-
   //sign up user
   Future<String> signUpUser({
     required String email,
@@ -34,6 +31,7 @@ class AuthMethods {
     required String username,
     required String bio,
     required Uint8List file,
+    
   }) async {
     String res = "something error occcures";
     // String res;
@@ -63,7 +61,7 @@ class AuthMethods {
             following: [],
             photoUrl: photurl);
 
-        //to  insset in firebase storage
+        //to  insset in firebase storage create add
         await _firestore
             .collection('users')
             .doc(cred.user!.uid)

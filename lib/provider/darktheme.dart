@@ -10,7 +10,7 @@ class ThemeChange extends ChangeNotifier {
   bool get darkTheme => _darkTheme;
 
   ThemeChange() {
-    _darkTheme = false;
+    _darkTheme = true;
     _loadFromPrefs();
   }
 
