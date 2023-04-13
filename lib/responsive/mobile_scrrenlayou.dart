@@ -6,6 +6,7 @@ import 'package:innsta/utils/app_styles.dart';
 
 import '../screen/account_screen.dart';
 import '../screen/add_postscreen.dart';
+import '../screen/feed_screen.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
@@ -61,7 +62,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            Text("Home"),
+            FeedScreen(),
             Text("Home"),
             AddPostScreen(),
             Text("Home"),

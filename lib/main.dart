@@ -9,6 +9,7 @@ import 'provider/darktheme.dart';
 import 'responsive/mobile_scrrenlayou.dart';
 import 'responsive/rewsponsive_layout.dart';
 import 'responsive/web_scrren_layout.dart';
+import 'screen/comment_screeen.dart';
 import 'screen/home_screen.dart';
 import 'screen/register_screen.dart';
 import 'provider/user_provider.dart';

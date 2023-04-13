@@ -19,7 +19,7 @@ class Postmodel {
       required this.datePublised});
 
   Map<String, dynamic> toJson() => {
-        " descriptions": descriptions,
+        "descriptions": descriptions,
         "uid": uid,
         "postId": postId,
         "likes": likes,

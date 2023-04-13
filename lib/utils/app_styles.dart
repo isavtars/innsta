@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+const webScreenSize = 600;
+
 const double kHeading1 = 7;
 const double kHeading2 = 6;
 const double kHeading3 = 5;
@@ -26,7 +29,7 @@ const blueColor = Color.fromRGBO(0, 149, 246, 1);
 const primaryColor = Colors.white;
 const secondaryColor = Colors.grey;
 
-const webScreenSize = 600;
+
 
 final kJakartaHeading1 = GoogleFonts.plusJakartaSans(
   fontWeight: FontWeight.w800,

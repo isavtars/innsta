@@ -8,14 +8,12 @@ class FirebaseStore {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //upload post
-
   Future<String> uploadsPost(
-      String descriptions,
+    String descriptions,
     Uint8List file,
-   String userName,
     String uid,
+    String userName,
     String profileImages,
-   
   ) async {
     String res = "Something error occures";
     try {
@@ -39,6 +37,89 @@ class FirebaseStore {
       res = err.toString();
     }
 
+    return res;
+  }
+
+  // like post
+
+  Future<String> likePost(String postId, String uid, List likes) async {
+    String res = "Something errors ocures";
+    try {
+      if (likes.contains(uid)) {
+        // if the likes list contains the user uid, we need to remove it
+        _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        // else we need to add uid to the likes array
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        });
+      }
+      res = "sucess";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  //comments post
+  Future<String> comments(String commentstext, String postId, String uid,
+      String userName, String profileImages) async {
+    String res = "Somethings errors occures";
+    try {
+      String comentId = const Uuid().v1();
+      if (commentstext.isNotEmpty) {
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(comentId)
+            .set({
+          "comentstext": commentstext,
+          "postId": postId,
+          "uid": uid,
+          "userName": userName,
+          "profileImages": profileImages,
+          "commentId": comentId,
+          "datePublissed": DateTime.now()
+        });
+        res = "success";
+      } else {
+        res = "please do comment first";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  //deleteComments
+  Future<String> deleteComments(String postId, String commentsId) async {
+    String res = "Something errors ocures";
+    try {
+      await _firestore
+          .collection('posts')
+          .doc(postId)
+          .collection('comments')
+          .doc(commentsId)
+          .delete();
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  //delete post
+  Future<String> deletePost(String postId) async {
+    String res = "Something errors ocures";
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+      res = "sucess";
+    } catch (err) {
+      res = err.toString();
+    }
     return res;
   }
 }
