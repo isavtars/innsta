@@ -45,7 +45,6 @@ class _PostCardState extends State<PostCard> {
         err.toString(),
       );
     }
-    setState(() {});
   }
 
   deletePost(String postId) async {
@@ -216,7 +215,6 @@ class _PostCardState extends State<PostCard> {
                     Icons.comment_outlined,
                   ),
                   onPressed: () {
-                    
                     Navigator.push(
                         context,
                         MaterialPageRoute(

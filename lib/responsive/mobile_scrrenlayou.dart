@@ -1,12 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:innsta/model/user_model.dart' as model;
+import 'package:innsta/provider/user_provider.dart';
 
 import 'package:innsta/utils/app_styles.dart';
+import 'package:provider/provider.dart';
 
-import '../screen/account_screen.dart';
+import '../screen/profile_screen.dart';
 import '../screen/add_postscreen.dart';
 import '../screen/feed_screen.dart';
+import '../screen/search_screen.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
@@ -16,23 +18,9 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  String username = "";
-
   @override
   void initState() {
-    userName();
     super.initState();
-  }
-
-  //get user name from fireStore
-  void userName() async {
-    DocumentSnapshot snap = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-
-    // debugPrint(
-    //     " the user name is ${(snap.data() as Map<String, dynamic>)['username']}");
   }
 
   final PageController _pageController = PageController();
@@ -57,16 +45,19 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final model.User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       body: SafeArea(
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
             FeedScreen(),
-            Text("Home"),
+            Searchscreen(),
             AddPostScreen(),
             Text("Home"),
-            AccountScreen()
+            ProfileScreen(
+              uid: user.uid,
+            )
           ],
           controller: _pageController,
           onPageChanged: onPageChangesd,

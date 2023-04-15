@@ -16,6 +16,7 @@ class AuthMethods {
 
   // get user details Reads
   Future<model.User> getUserDetails() async {
+    //this is firebase Users
     User currentUser = _auth.currentUser!;
 
     DocumentSnapshot documentSnapshot =
@@ -31,7 +32,6 @@ class AuthMethods {
     required String username,
     required String bio,
     required Uint8List file,
-    
   }) async {
     String res = "something error occcures";
     // String res;
