@@ -50,17 +50,17 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
       body: SafeArea(
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          onPageChanged: onPageChangesd,
           children: [
-            FeedScreen(),
-            Searchscreen(),
-            AddPostScreen(),
-            Text("Home"),
+            const FeedScreen(),
+            const Searchscreen(),
+            const AddPostScreen(),
+            const Text("Home"),
             ProfileScreen(
               uid: user.uid,
             )
           ],
-          controller: _pageController,
-          onPageChanged: onPageChangesd,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

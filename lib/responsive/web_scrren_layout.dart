@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:innsta/provider/user_provider.dart';
 import 'package:innsta/resources/auth_methods.dart';
-import 'package:provider/provider.dart';
 
-import '../model/user_model.dart' as model;
 
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({super.key});

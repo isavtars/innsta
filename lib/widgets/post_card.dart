@@ -172,11 +172,6 @@ class _PostCardState extends State<PostCard> {
                   opacity: isLikeAnimating ? 1 : 0,
                   child: LikeAnimation(
                     isAnimating: isLikeAnimating,
-                    child: Icon(
-                      Icons.favorite,
-                      color: Color.fromARGB(255, 241, 15, 15),
-                      size: 100,
-                    ),
                     duration: const Duration(
                       milliseconds: 400,
                     ),
@@ -185,6 +180,11 @@ class _PostCardState extends State<PostCard> {
                         isLikeAnimating = false;
                       });
                     },
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Color.fromARGB(255, 241, 15, 15),
+                      size: 100,
+                    ),
                   ),
                 ),
               ],
@@ -245,11 +245,11 @@ class _PostCardState extends State<PostCard> {
                 DefaultTextStyle(
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle2!
+                        .titleSmall!
                         .copyWith(fontWeight: FontWeight.w800),
                     child: Text(
                       '${widget.snap['likes'].length} likes',
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     )),
                 Container(
                   width: double.infinity,
@@ -275,6 +275,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 InkWell(
                     child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Text(
                         'View all $commentLen comments',
                         style: const TextStyle(
@@ -282,7 +283,6 @@ class _PostCardState extends State<PostCard> {
                           color: secondaryColor,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 4),
                     ),
                     onTap: () {
                       print("helo writers");
