@@ -65,7 +65,6 @@ class _PostCardState extends State<PostCard> {
     final width = MediaQuery.of(context).size.width;
     final logger = Logger();
 
-
     return Container(
       // boundary needed for web
       decoration: BoxDecoration(
@@ -105,9 +104,7 @@ class _PostCardState extends State<PostCard> {
                         Text(
                           widget.snap['userName'].toString(),
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                          ),
+                              fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ],
                     ),
@@ -115,7 +112,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 widget.snap['uid'].toString() == user.uid
                     ? IconButton(
-                      color: Colors.white,
+                        color: Colors.white,
                         onPressed: () {
                           showDialog(
                             useRootNavigator: false,
@@ -209,6 +206,7 @@ class _PostCardState extends State<PostCard> {
                           )
                         : const Icon(
                             Icons.favorite_border,
+                            color: Colors.white,
                           ),
                     onPressed: () {
                       FirebaseStore().likePost(widget.snap['postId'], user.uid,
@@ -218,6 +216,7 @@ class _PostCardState extends State<PostCard> {
               IconButton(
                   icon: const Icon(
                     Icons.comment_outlined,
+                    color: Colors.white,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -230,13 +229,18 @@ class _PostCardState extends State<PostCard> {
               IconButton(
                   icon: const Icon(
                     Icons.send,
+                    color: Colors.white,
                   ),
                   onPressed: () {}),
               Expanded(
                   child: Align(
                 alignment: Alignment.bottomRight,
                 child: IconButton(
-                    icon: const Icon(Icons.bookmark_border), onPressed: () {}),
+                    icon: const Icon(
+                      Icons.bookmark_border,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {}),
               ))
             ],
           ),
