@@ -2,18 +2,19 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:innsta/resources/auth_methods.dart';
+import 'package:innsta/screen/forgot_password.dart';
 import 'package:innsta/utils/utils.dart';
 
 import 'package:provider/provider.dart';
 
 import '../provider/darktheme.dart';
-import '../responsive/mobile_scrrenlayou.dart';
-import '../responsive/rewsponsive_layout.dart';
-import '../responsive/web_scrren_layout.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/app_styles.dart';
 import '../utils/size_config.dart';
-import '../widgets/custome_buttons.dart';
-import '../widgets/inpurttex_feilds.dart';
+import '../widgets/custom_buttons.dart';
+import '../widgets/input_text_fields.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,12 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLodaing = false;
       });
       // Navigator.pushNamed(context, "/home");
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-        builder: (context) => const ResponsiveLayout(
-          mobileScreenLayout: MobileScreenLayout(),
-          webScreenLayout: WebScreenLayout(),
-        ),
-      ),
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
+          ),
           (route) => false);
     } else {
       showSnackBar(context, res);
@@ -91,8 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          InputTextFeilds(
-                            hinttext: "email",
+                          InputTextFields(
+                            hinttext: "Email",
                             textEditingController: _emailController,
                             textInputType: TextInputType.emailAddress,
                             isPass: false,
@@ -100,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             height: 13,
                           ),
-                          InputTextFeilds(
-                            hinttext: "password",
+                          InputTextFields(
+                            hinttext: "Password",
                             textEditingController: _passwordController,
                             textInputType: TextInputType.text,
                             isPass: true,
@@ -109,20 +111,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             height: 9,
                           ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "forgget password??",
-                              style: kJakartaBodyRegular.copyWith(
-                                  color: kPrimarybackGround,
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal! * kBody),
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen())),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "Forgot password?",
+                                style: kJakartaBodyRegular.copyWith(
+                                    color: kPrimarybackGround,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal! * kBody),
+                              ),
                             ),
                           ),
                           const SizedBox(
                             height: 13,
                           ),
-                          Customebuttions(
+                          CustomButtons(
                             buttontext: _isLodaing
                                 ? const CircularProgressIndicator(
                                     color: kWhite,
@@ -136,7 +141,42 @@ class _LoginScreenState extends State<LoginScreen> {
                             onpressed: loginUser,
                           ),
                           const SizedBox(
-                            height: 40,
+                            height: 20,
+                          ),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                              text: "Don’t have an account?",
+                              style: kJakartaHeading4.copyWith(
+                                  color: kDarkBackGroundColor,
+                                  fontSize: SizeConfig.blockSizeHorizontal! *
+                                      kHeading4),
+                            ),
+                            TextSpan(
+                                text: " SignUP",
+                                style: kJakartaHeading4.copyWith(
+                                  color: kPrimarybackGround,
+                                  fontSize: SizeConfig.blockSizeHorizontal! *
+                                      kHeading4,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushNamed(context, "/signup");
+                                  })
+                          ])),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: Text(
+                              "OR",
+                              style: kJakartaHeading4.copyWith(
+                                  fontSize: SizeConfig.blockSizeHorizontal! *
+                                      kHeading4),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           SizedBox(
                             height: 32,
@@ -150,51 +190,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
-                                    "Logi in with  Gooogle",
-                                    style: kJakartaBodyBold.copyWith(
-                                        color: kPrimarybackGround,
-                                        fontSize:
-                                            SizeConfig.blockSizeHorizontal! *
-                                                kHeading4),
+                                  InkWell(
+                                    onTap: AuthMethods().signInWithGoogle,
+                                    child: Text(
+                                      "Login with  Gooogle",
+                                      style: kJakartaBodyBold.copyWith(
+                                          color: kPrimarybackGround,
+                                          fontSize:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  kHeading4),
+                                    ),
                                   )
                                 ]),
                           ),
-                          const SizedBox(
-                            height: 32,
-                          ),
-                          Center(
-                            child: Text(
-                              "OR",
-                              style: kJakartaHeading4.copyWith(
-                                  fontSize: SizeConfig.blockSizeHorizontal! *
-                                      kHeading4),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 32,
-                          ),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: "Don’t have an account?",
-                              style: kJakartaHeading4.copyWith(
-                                  color: kDarkBackGroundColor,
-                                  fontSize: SizeConfig.blockSizeHorizontal! *
-                                      kHeading4),
-                            ),
-                            TextSpan(
-                                text: " signup",
-                                style: kJakartaHeading4.copyWith(
-                                  color: kPrimarybackGround,
-                                  fontSize: SizeConfig.blockSizeHorizontal! *
-                                      kHeading4,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pushNamed(context, "/signup");
-                                  })
-                          ]))
                         ]),
                   ),
                 ],

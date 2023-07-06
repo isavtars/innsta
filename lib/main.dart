@@ -4,16 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:innsta/screen/login_screen.dart';
 import 'package:provider/provider.dart';
-
 import 'provider/darktheme.dart';
-import 'responsive/mobile_scrrenlayou.dart';
-import 'responsive/rewsponsive_layout.dart';
-import 'responsive/web_scrren_layout.dart';
-import 'screen/comment_screeen.dart';
+import 'responsive/mobile_screen_layout.dart';
+import 'responsive/responsive_layout.dart';
+import 'responsive/web_screen_layout.dart';
 import 'screen/home_screen.dart';
 import 'screen/register_screen.dart';
 import 'provider/user_provider.dart';
-
 import 'utils/thems.dart';
 //firebase
 

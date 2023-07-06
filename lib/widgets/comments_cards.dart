@@ -7,8 +7,17 @@ import '../provider/user_provider.dart';
 import '../resources/firestroe_methods.dart';
 
 class CommentCard extends StatelessWidget {
-  final snap;
+  final dynamic snap;
   const CommentCard({Key? key, required this.snap}) : super(key: key);
+
+  void deleteComment(
+      String postId, String commentId, VoidCallback onSuccess) async {
+    String res = await FirebaseStore().deleteComments(postId, commentId);
+
+    if (res == 'success') {
+      onSuccess();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,21 +95,18 @@ class CommentCard extends StatelessWidget {
                                 ]
                                     .map(
                                       (e) => InkWell(
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12, horizontal: 16),
-                                            child: Text(e),
-                                          ),
-                                          onTap: () async {
-                                            String res = await FirebaseStore()
-                                                .deleteComments(
-                                                    snap.data()['postId'],
-                                                    snap.data()['commentId']);
-
-                                            if (res == 'success') {
-                                              Navigator.pop(context);
-                                            }
-                                          }),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 12, horizontal: 16),
+                                          child: Text(e),
+                                        ),
+                                        onTap: () {
+                                          deleteComment(snap.data()['postId'],
+                                              snap.data()['commentId'], () {
+                                            Navigator.pop(context);
+                                          });
+                                        },
+                                      ),
                                     )
                                     .toList()),
                           );

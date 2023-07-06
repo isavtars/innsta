@@ -2,7 +2,7 @@ class Postmodel {
   final String descriptions;
   final String uid;
   final String postId;
-  final likes;
+  final dynamic likes;
   final String userName;
   final String postUrl;
   final String postImages;

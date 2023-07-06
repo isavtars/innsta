@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -15,10 +14,10 @@ class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);
 
   @override
-  _AddPostScreenState createState() => _AddPostScreenState();
+  AddPostScreenState createState() => AddPostScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
   bool isLoading = false;
   final TextEditingController _descriptionController = TextEditingController();
@@ -114,7 +113,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final UserProvider _userPrvider = Provider.of<UserProvider>(context);
+    final UserProvider userPrvider = Provider.of<UserProvider>(context);
 
     return _file == null
         ? Center(
@@ -139,9 +138,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => postImage(
-                    _userPrvider.getUser.uid,
-                    _userPrvider.getUser.username,
-                    _userPrvider.getUser.photoUrl,
+                    userPrvider.getUser.uid,
+                    userPrvider.getUser.username,
+                    userPrvider.getUser.photoUrl,
                   ),
                   child: const Text(
                     "Post",
@@ -168,7 +167,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   children: <Widget>[
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                        _userPrvider.getUser.photoUrl,
+                        userPrvider.getUser.photoUrl,
                       ),
                     ),
                     SizedBox(

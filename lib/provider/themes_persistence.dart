@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DarkThemPerstinces {
+class DarkThemPersistence {
   //thatis ke for value
   static const themmStatus = "THEMESTATUS";
 

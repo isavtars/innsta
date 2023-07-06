@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:innsta/provider/user_provider.dart';
 import 'package:innsta/utils/app_styles.dart';
@@ -11,9 +10,9 @@ import '../resources/firestroe_methods.dart';
 import '../widgets/comments_cards.dart';
 
 class CommentScreen extends StatefulWidget {
-  const CommentScreen({super.key, required this.PostId});
+  const CommentScreen({super.key, required this.postId});
 
-  final String PostId;
+  final String postId;
   @override
   State<CommentScreen> createState() => _CommentScreenState();
 }
@@ -25,7 +24,7 @@ class _CommentScreenState extends State<CommentScreen> {
   void postComments(String uid, String userName, String profileImages) async {
     try {
       String res = await FirebaseStore().comments(commentEditingController.text,
-          widget.PostId, uid, userName, profileImages);
+          widget.postId, uid, userName, profileImages);
 
       if (res == 'success') {
         showSnackBar(context, res);
@@ -52,7 +51,7 @@ class _CommentScreenState extends State<CommentScreen> {
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('posts')
-              .doc(widget.PostId)
+              .doc(widget.postId)
               .collection('comments')
               .snapshots(),
           builder: (context,

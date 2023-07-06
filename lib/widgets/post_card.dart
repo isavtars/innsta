@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../model/user_model.dart';
 import '../provider/user_provider.dart';
@@ -11,7 +12,7 @@ import 'like_animatins.dart';
 import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const PostCard({
     Key? key,
     required this.snap,
@@ -62,6 +63,8 @@ class _PostCardState extends State<PostCard> {
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
     final width = MediaQuery.of(context).size.width;
+    final logger = Logger();
+
 
     return Container(
       // boundary needed for web
@@ -103,6 +106,7 @@ class _PostCardState extends State<PostCard> {
                           widget.snap['userName'].toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: Colors.white
                           ),
                         ),
                       ],
@@ -111,6 +115,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 widget.snap['uid'].toString() == user.uid
                     ? IconButton(
+                      color: Colors.white,
                         onPressed: () {
                           showDialog(
                             useRootNavigator: false,
@@ -172,11 +177,6 @@ class _PostCardState extends State<PostCard> {
                   opacity: isLikeAnimating ? 1 : 0,
                   child: LikeAnimation(
                     isAnimating: isLikeAnimating,
-                    child: Icon(
-                      Icons.favorite,
-                      color: Color.fromARGB(255, 241, 15, 15),
-                      size: 100,
-                    ),
                     duration: const Duration(
                       milliseconds: 400,
                     ),
@@ -185,6 +185,11 @@ class _PostCardState extends State<PostCard> {
                         isLikeAnimating = false;
                       });
                     },
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Color.fromARGB(255, 241, 15, 15),
+                      size: 100,
+                    ),
                   ),
                 ),
               ],
@@ -219,7 +224,7 @@ class _PostCardState extends State<PostCard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => CommentScreen(
-                                  PostId: widget.snap['postId'].toString(),
+                                  postId: widget.snap['postId'].toString(),
                                 )));
                   }),
               IconButton(
@@ -245,11 +250,11 @@ class _PostCardState extends State<PostCard> {
                 DefaultTextStyle(
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle2!
+                        .titleSmall!
                         .copyWith(fontWeight: FontWeight.w800),
                     child: Text(
                       '${widget.snap['likes'].length} likes',
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     )),
                 Container(
                   width: double.infinity,
@@ -275,6 +280,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 InkWell(
                     child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Text(
                         'View all $commentLen comments',
                         style: const TextStyle(
@@ -282,15 +288,14 @@ class _PostCardState extends State<PostCard> {
                           color: secondaryColor,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 4),
                     ),
                     onTap: () {
-                      print("helo writers");
+                      logger.e("All Comments");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => CommentScreen(
-                                    PostId: widget.snap['postId'].toString(),
+                                    postId: widget.snap['postId'].toString(),
                                   )));
                     }),
                 Padding(

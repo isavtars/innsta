@@ -43,7 +43,7 @@ class AuthMethods {
           password.isNotEmpty ||
           username.isNotEmpty ||
           bio.isNotEmpty ||
-          file != null) {
+          file.isNotEmpty) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
@@ -91,7 +91,7 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
-    String res = "Something error ocures";
+    String res = "Something went wrong";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
@@ -99,7 +99,7 @@ class AuthMethods {
 
         res = "success";
       } else {
-        res = "please  enter all feilds";
+        res = "please  enter all fields";
       }
     } catch (err) {
       res = err.toString();
@@ -107,7 +107,74 @@ class AuthMethods {
     return res;
   }
 
+  //reset password
+  Future<String> resetPassword({
+  required String email,
+}) async {
+  String res = "Something went wrong";
+  try {
+    if (email.isNotEmpty) {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      res = "success";
+    } else {
+      res = "Please enter your email";
+    }
+  } catch (err) {
+    res = err.toString();
+  }
+  return res;
+}
+
   //signin with google
+
+  Future<String> signInWithGoogle() async {
+    String res = "Something went wrong";
+
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+      if (user != null) {
+        // Check if the user already exists in Firestore
+        final DocumentSnapshot snapshot = await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        if (!snapshot.exists) {
+          // User is signing in for the first time, create a new user document
+          model.User newUser = model.User(
+            username: user.displayName ?? '',
+            email: user.email ?? '',
+            uid: user.uid,
+            bio: '',
+            followers: [],
+            following: [],
+            photoUrl: user.photoURL ?? '',
+          );
+
+          await _firestore.collection('users').doc(user.uid).set(newUser.toJson());
+        }
+        res = "success";
+      } else {
+        res = "Unable to sign in with Google";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+
+    return res;
+  }
 
   //logout
 

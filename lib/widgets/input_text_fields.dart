@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class InputTextFeilds extends StatelessWidget {
-  const InputTextFeilds({
+class InputTextFields extends StatelessWidget {
+  const InputTextFields({
     super.key,
     required this.hinttext,
     required this.textEditingController,
