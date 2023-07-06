@@ -228,7 +228,7 @@ class _PostCardState extends State<PostCard> {
                   }),
               IconButton(
                   icon: const Icon(
-                    Icons.send,
+                    Icons.share,
                     color: Colors.white,
                   ),
                   onPressed: () {}),
