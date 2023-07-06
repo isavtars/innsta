@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../utils/app_styles.dart';
 import '../utils/size_config.dart';
 
-class Customebuttions extends StatelessWidget {
-  const Customebuttions(
+class CustomButtons extends StatelessWidget {
+  const CustomButtons(
       {super.key, required this.buttontext, required this.onpressed});
 
   final Widget buttontext;

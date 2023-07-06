@@ -6,13 +6,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:innsta/utils/utils.dart';
 
 import '../resources/auth_methods.dart';
-import '../responsive/mobile_scrrenlayou.dart';
-import '../responsive/rewsponsive_layout.dart';
-import '../responsive/web_scrren_layout.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/app_styles.dart';
 import '../utils/size_config.dart';
-import '../widgets/custome_buttons.dart';
-import '../widgets/inpurttex_feilds.dart';
+import '../widgets/custom_buttons.dart';
+import '../widgets/input_text_fields.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -100,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     : const CircleAvatar(
                         maxRadius: 62,
                         foregroundImage: NetworkImage(
-                            "https://avatars.githubusercontent.com/u/113200845?s=96&v=4"),
+                            "https://avatars.githubusercontent.com/u/97216927?v=4"),
                       ),
                 Positioned(
                     bottom: -7,
@@ -123,8 +123,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InputTextFeilds(
-                    hinttext: "Enter your usernames",
+                  InputTextFields(
+                    hinttext: "Enter your Username",
                     textEditingController: _usernameController,
                     textInputType: TextInputType.text,
                     isPass: false,
@@ -132,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  InputTextFeilds(
+                  InputTextFields(
                     hinttext: "Enter your Email",
                     textEditingController: _emailController,
                     textInputType: TextInputType.emailAddress,
@@ -141,8 +141,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  InputTextFeilds(
-                    hinttext: "Enter your password ",
+                  InputTextFields(
+                    hinttext: "Enter your Password",
                     textEditingController: _passwordController,
                     textInputType: TextInputType.text,
                     isPass: true,
@@ -150,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  InputTextFeilds(
+                  InputTextFields(
                     hinttext: "Enter your bio",
                     textEditingController: _bioController,
                     textInputType: TextInputType.text,
@@ -159,13 +159,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Customebuttions(
+                  CustomButtons(
                       buttontext: _isLodaing
                           ? const CircularProgressIndicator(
                               color: kWhite,
                             )
                           : Text(
-                              'sign in',
+                              'Sign Up',
                               style: kJakartaHeading3.copyWith(
                                 color: kWhite,
                                 fontSize:
@@ -179,14 +179,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      text: "Don’t have an account?",
+                      text: "Already have an account ?",
                       style: kJakartaHeading4.copyWith(
                           color: kDarkBackGroundColor,
                           fontSize:
                               SizeConfig.blockSizeHorizontal! * kHeading4),
                     ),
                     TextSpan(
-                        text: " signin",
+                        text: " Login",
                         style: kJakartaHeading4.copyWith(
                           color: kPrimarybackGround,
                           fontSize: SizeConfig.blockSizeHorizontal! * kHeading4,

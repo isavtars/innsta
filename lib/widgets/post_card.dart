@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../model/user_model.dart';
 import '../provider/user_provider.dart';
@@ -11,7 +12,7 @@ import 'like_animatins.dart';
 import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const PostCard({
     Key? key,
     required this.snap,
@@ -62,6 +63,8 @@ class _PostCardState extends State<PostCard> {
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
     final width = MediaQuery.of(context).size.width;
+    final logger = Logger();
+
 
     return Container(
       // boundary needed for web
@@ -103,6 +106,7 @@ class _PostCardState extends State<PostCard> {
                           widget.snap['userName'].toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: Colors.white
                           ),
                         ),
                       ],
@@ -111,6 +115,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 widget.snap['uid'].toString() == user.uid
                     ? IconButton(
+                      color: Colors.white,
                         onPressed: () {
                           showDialog(
                             useRootNavigator: false,
@@ -219,7 +224,7 @@ class _PostCardState extends State<PostCard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => CommentScreen(
-                                  PostId: widget.snap['postId'].toString(),
+                                  postId: widget.snap['postId'].toString(),
                                 )));
                   }),
               IconButton(
@@ -285,12 +290,12 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ),
                     onTap: () {
-                      print("helo writers");
+                      logger.e("All Comments");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => CommentScreen(
-                                    PostId: widget.snap['postId'].toString(),
+                                    postId: widget.snap['postId'].toString(),
                                   )));
                     }),
                 Padding(

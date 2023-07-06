@@ -14,10 +14,10 @@ class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);
 
   @override
-  _AddPostScreenState createState() => _AddPostScreenState();
+  AddPostScreenState createState() => AddPostScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
   bool isLoading = false;
   final TextEditingController _descriptionController = TextEditingController();
