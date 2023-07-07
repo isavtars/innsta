@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:innsta/resources/auth_methods.dart';
-import 'package:innsta/screen/forgot_password.dart';
-import 'package:innsta/utils/utils.dart';
+import 'package:instagram/resources/auth_methods.dart';
+import 'package:instagram/screen/forgot_password.dart';
+import 'package:instagram/utils/utils.dart';
 
 import 'package:provider/provider.dart';
 
@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Consumer<ThemeChange>(
         builder: (context, themevalue, child) {
           return Container(
+            color: Colors.black,
             height: double.infinity,
             padding: const EdgeInsets.only(top: 60),
             child: SingleChildScrollView(
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(
                     height: 79,
-                    child: SvgPicture.asset("assets/svgimages/back.svg"),
+                    child: SvgPicture.asset("assets/svgimages/w.svg"),
                   ),
                   const SizedBox(
                     height: 26,
@@ -94,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InputTextFields(
+                            icon: const Icon(Icons.alternate_email, color: Colors.grey,),
                             hinttext: "Email",
                             textEditingController: _emailController,
                             textInputType: TextInputType.emailAddress,
@@ -103,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 13,
                           ),
                           InputTextFields(
+                            icon: const Icon(Icons.lock, color: Colors.grey,),
                             hinttext: "Password",
                             textEditingController: _passwordController,
                             textInputType: TextInputType.text,
@@ -112,15 +115,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 9,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen())),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPasswordScreen())),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                "Forgot password?",
+                                "Forgot Password?",
                                 style: kJakartaBodyRegular.copyWith(
                                     color: kPrimarybackGround,
-                                    fontSize:
-                                        SizeConfig.blockSizeHorizontal! * kBody),
+                                    // fontSize: SizeConfig.blockSizeHorizontal! *
+                                    //     kBody
+                                        ),
                               ),
                             ),
                           ),
@@ -148,16 +156,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextSpan(
                               text: "Don’t have an account?",
                               style: kJakartaHeading4.copyWith(
-                                  color: kDarkBackGroundColor,
-                                  fontSize: SizeConfig.blockSizeHorizontal! *
-                                      kHeading4),
+                                  color: Colors.white,
+                                  // fontSize: SizeConfig.blockSizeHorizontal! *
+                                  //     kHeading4
+                                      ),
                             ),
                             TextSpan(
                                 text: " SignUP",
                                 style: kJakartaHeading4.copyWith(
                                   color: kPrimarybackGround,
-                                  fontSize: SizeConfig.blockSizeHorizontal! *
-                                      kHeading4,
+                                  // fontSize: SizeConfig.blockSizeHorizontal! *
+                                  //     kHeading4,
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
@@ -193,12 +202,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   InkWell(
                                     onTap: AuthMethods().signInWithGoogle,
                                     child: Text(
-                                      "Login with  Gooogle",
+                                      "Login with Google",
                                       style: kJakartaBodyBold.copyWith(
                                           color: kPrimarybackGround,
-                                          fontSize:
-                                              SizeConfig.blockSizeHorizontal! *
-                                                  kHeading4),
+                                          // fontSize:
+                                          //     SizeConfig.blockSizeHorizontal! *
+                                          //         kHeading4
+                                                  ),
                                     ),
                                   )
                                 ]),

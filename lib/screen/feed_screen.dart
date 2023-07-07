@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:innsta/utils/app_styles.dart';
+import 'package:instagram/utils/app_styles.dart';
 
 import '../widgets/post_card.dart';
 
@@ -13,25 +13,24 @@ class FeedScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: AppBar(
-          title: SvgPicture.asset(
-            "assets/svgimages/w.svg",
-            height: 52,
-          ),
-          backgroundColor: mobileBackgroundColor,
-          centerTitle: false,
-          elevation: 0.1,
-          actions: [
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.messenger_outline))
-          ],
+      appBar: AppBar(
+        title: SvgPicture.asset(
+          "assets/svgimages/w.svg",
+          height: 52,
         ),
-        body:  StreamBuilder(
+        backgroundColor: Colors.black,
+        centerTitle: false,
+        elevation: 0.1,
+        actions: [
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.messenger_outline))
+        ],
+      ),
+      body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-          
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -50,6 +49,6 @@ class FeedScreen extends StatelessWidget {
           );
         },
       ),
-        );
+    );
   }
 }

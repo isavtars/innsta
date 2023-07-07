@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 const webScreenSize = 600;
 
 const double kHeading1 = 7;
@@ -15,7 +14,8 @@ const double kBody1 = 3;
 const double kBody2 = 2.5;
 
 const Color kBackGroundColor = Color(0xffF2F2F2);
-const Color kWhite = Color(0xffffffff);
+const Color kWhite = Colors.white;
+// Color(0xffffffff);
 
 const Color kDarkBackGroundColor = Color(0xff000000);
 const Color kPrimarybackGround = Color(0xff3797EF);
@@ -28,8 +28,6 @@ const mobileSearchColor = Color.fromRGBO(38, 38, 38, 1);
 const blueColor = Color.fromRGBO(0, 149, 246, 1);
 const primaryColor = Colors.white;
 const secondaryColor = Colors.grey;
-
-
 
 final kJakartaHeading1 = GoogleFonts.plusJakartaSans(
   fontWeight: FontWeight.w800,

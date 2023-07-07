@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:innsta/screen/login_screen.dart';
+import 'package:instagram/screen/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'provider/darktheme.dart';
 import 'responsive/mobile_screen_layout.dart';
@@ -11,7 +11,7 @@ import 'responsive/web_screen_layout.dart';
 import 'screen/home_screen.dart';
 import 'screen/register_screen.dart';
 import 'provider/user_provider.dart';
-import 'utils/thems.dart';
+import 'utils/themes.dart';
 //firebase
 
 void main() async {

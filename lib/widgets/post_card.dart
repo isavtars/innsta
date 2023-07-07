@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:social_share/social_share.dart';
 import '../model/user_model.dart';
 import '../provider/user_provider.dart';
 import '../resources/firestroe_methods.dart';
 import '../screen/comment_screeen.dart';
 import '../utils/app_styles.dart';
 import '../utils/utils.dart';
-import 'like_animatins.dart';
+import 'like_animation.dart';
 import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
@@ -68,10 +69,10 @@ class _PostCardState extends State<PostCard> {
     return Container(
       // boundary needed for web
       decoration: BoxDecoration(
-        border: Border.all(
-          color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
-        ),
-        color: mobileBackgroundColor,
+        border: Border.all(color: Colors.black
+            // width > webScreenSize ? secondaryColor : mobileBackgroundColor,
+            ),
+        color: Colors.black,
       ),
       padding: const EdgeInsets.symmetric(
         vertical: 10,
@@ -133,7 +134,22 @@ class _PostCardState extends State<PostCard> {
                                                     const EdgeInsets.symmetric(
                                                         vertical: 12,
                                                         horizontal: 16),
-                                                child: Text(e),
+                                                child: Row(
+                                                  children: [
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 8.0),
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                    Text(e,
+                                                        style: const TextStyle(
+                                                          color: Colors.red,
+                                                        )),
+                                                  ],
+                                                ),
                                               ),
                                               onTap: () => deletePost(
                                                   widget.snap['postId'])),
@@ -228,10 +244,43 @@ class _PostCardState extends State<PostCard> {
                   }),
               IconButton(
                   icon: const Icon(
-                    Icons.share,
+                    Icons.send,
                     color: Colors.white,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.black,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              leading: const Icon(Icons.repeat, color: Colors.white,),
+                              title: const Text('Repost'),
+                              onTap: () {
+                                // Handle repost functionality here
+                                Navigator.pop(
+                                    context); // Close the bottom sheet
+                              },
+                            ),
+                            ListTile(
+                              leading: const Icon(Icons.share, color: Colors.white,),
+                              title: const Text('Share',),
+                              onTap: () {
+                                // Share the post externally
+                                SocialShare.shareOptions(
+                                  'Check out this post: ${widget.snap['postUrl']}',
+                                );
+                                // Close the bottom sheet
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }),
               Expanded(
                   child: Align(
                 alignment: Alignment.bottomRight,
@@ -270,7 +319,7 @@ class _PostCardState extends State<PostCard> {
                       style: const TextStyle(color: primaryColor),
                       children: [
                         TextSpan(
-                          text: widget.snap['uid'].toString(),
+                          text: widget.snap['userName'].toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

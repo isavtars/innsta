@@ -1,44 +1,13 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-
-// import '../provider/darktheme.dart';
-// import '../resources/auth_methods.dart';
-
-// class AccountScreen extends StatelessWidget {
-//   const AccountScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Consumer<ThemeChange>(builder: (context, thems, child) {
-//       return Column(
-//         children: [
-//           const Placeholder(),
-//           MaterialButton(
-//             onPressed: () {
-//               AuthMethods().logOut();
-//             },
-//             child: const Icon(Icons.logout_outlined),
-//           ),
-//           Switch(
-//               value: thems.darkTheme,
-//               onChanged: (bool value) {
-//                 thems.toggleTheme();
-//               })
-//         ],
-//       );
-//     }));
-//   }
-// }
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../resources/auth_methods.dart';
+import '../resources/firestroe_methods.dart';
 import '../utils/app_styles.dart';
 import '../utils/utils.dart';
-import '../widgets/follow_btn.dart';
+import '../widgets/follow_button.dart';
 import 'login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -106,10 +75,17 @@ class ProfileScreenState extends State<ProfileScreen> {
           )
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: mobileBackgroundColor,
+              backgroundColor: Colors.black,
               title: Text(
                 userData['username'],
               ),
+              actions: const[ Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Icon(Icons.add_box_outlined),
+              ),  Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Icon(Icons.menu),
+              )],
               centerTitle: false,
             ),
             body: ListView(
@@ -152,7 +128,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                               text: 'Sign Out',
                                               backgroundColor:
                                                   mobileBackgroundColor,
-                                              textColor: primaryColor,
+                                              textColor: Colors.red,
                                               borderColor: Colors.grey,
                                               function: () async {
                                                 await AuthMethods().logOut();
@@ -173,7 +149,19 @@ class ProfileScreenState extends State<ProfileScreen> {
                                                   backgroundColor: Colors.white,
                                                   textColor: Colors.black,
                                                   borderColor: Colors.grey,
-                                                  function: () async {},
+                                                  function: () async {
+                                                     await FirebaseStore()
+                                                      .followUser(
+                                                    FirebaseAuth.instance
+                                                        .currentUser!.uid,
+                                                    userData['uid'],
+                                                  );
+
+                                                  setState(() {
+                                                    isFollowing = false;
+                                                    followers--;
+                                                  });
+                                                  },
                                                 ),
                                               )
                                             : Expanded(
@@ -182,7 +170,19 @@ class ProfileScreenState extends State<ProfileScreen> {
                                                   backgroundColor: Colors.blue,
                                                   textColor: Colors.white,
                                                   borderColor: Colors.blue,
-                                                  function: () async {},
+                                                  function: () async {
+                                                    await FirebaseStore()
+                                                      .followUser(
+                                                    FirebaseAuth.instance
+                                                        .currentUser!.uid,
+                                                    userData['uid'],
+                                                  );
+
+                                                  setState(() {
+                                                    isFollowing = true;
+                                                    followers++;
+                                                  });
+                                                  },
                                                 ),
                                               )
                                   ],

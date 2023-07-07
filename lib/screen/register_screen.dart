@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:innsta/utils/utils.dart';
+import 'package:instagram/utils/utils.dart';
 
 import '../resources/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -86,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(children: [
             SizedBox(
                 height: 69,
-                child: SvgPicture.asset("assets/svgimages/back.svg")),
+                child: SvgPicture.asset("assets/svgimages/w.svg")),
             const SizedBox(
               height: 25,
             ),
@@ -99,7 +99,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       )
                     : const CircleAvatar(
                         maxRadius: 62,
-                        foregroundImage: NetworkImage(
+                        foregroundImage: 
+                        // AssetImage('assets/svgimages/defaultpp.png')
+                        NetworkImage(
                             "https://avatars.githubusercontent.com/u/97216927?v=4"),
                       ),
                 Positioned(
@@ -110,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       icon: const Icon(
                         Icons.photo_camera,
                         size: 32,
-                        color: kDarkBackGroundColor,
+                        color: Colors.white,
                       ),
                     ))
               ],
@@ -124,6 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InputTextFields(
+                     icon: const Icon(Icons.account_circle_outlined, color: Colors.grey,),
                     hinttext: "Enter your Username",
                     textEditingController: _usernameController,
                     textInputType: TextInputType.text,
@@ -134,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   InputTextFields(
                     hinttext: "Enter your Email",
+                     icon: const Icon(Icons.alternate_email, color: Colors.grey,),
                     textEditingController: _emailController,
                     textInputType: TextInputType.emailAddress,
                     isPass: false,
@@ -142,6 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 10,
                   ),
                   InputTextFields(
+                     icon: const Icon(Icons.lock_outlined, color: Colors.grey,),
                     hinttext: "Enter your Password",
                     textEditingController: _passwordController,
                     textInputType: TextInputType.text,
@@ -151,6 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 10,
                   ),
                   InputTextFields(
+                     icon: const Icon(Icons.info_outline_rounded, color: Colors.grey,),
                     hinttext: "Enter your bio",
                     textEditingController: _bioController,
                     textInputType: TextInputType.text,
@@ -179,17 +185,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      text: "Already have an account ?",
+                      text: "Already have an account ? ",
                       style: kJakartaHeading4.copyWith(
-                          color: kDarkBackGroundColor,
-                          fontSize:
-                              SizeConfig.blockSizeHorizontal! * kHeading4),
+                          color: Colors.white,
+                          // fontSize:
+                          //     SizeConfig.blockSizeHorizontal! * kHeading4
+                              ),
                     ),
                     TextSpan(
                         text: " Login",
                         style: kJakartaHeading4.copyWith(
                           color: kPrimarybackGround,
-                          fontSize: SizeConfig.blockSizeHorizontal! * kHeading4,
+                          // fontSize: SizeConfig.blockSizeHorizontal! * kHeading4,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {

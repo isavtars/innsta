@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:innsta/resources/auth_methods.dart';
-import 'package:innsta/utils/utils.dart';
+import 'package:instagram/resources/auth_methods.dart';
+import 'package:instagram/utils/utils.dart';
 
 import 'package:provider/provider.dart';
 
 import '../provider/darktheme.dart';
-import '../responsive/mobile_screen_layout.dart';
-import '../responsive/responsive_layout.dart';
-import '../responsive/web_screen_layout.dart';
+// import '../responsive/mobile_screen_layout.dart';
+// import '../responsive/responsive_layout.dart';
+// import '../responsive/web_screen_layout.dart';
 import '../utils/app_styles.dart';
 import '../utils/size_config.dart';
 import '../widgets/custom_buttons.dart';
@@ -25,36 +25,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   bool isLoading = false;
-  
+
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
   }
 
- void resetPassword() async {
+  void resetPassword() async {
     setState(() {
       isLoading = true;
     });
     String res = await AuthMethods().resetPassword(
-        email: _emailController.text.trim(),
-        );
+      email: _emailController.text.trim(),
+    );
 
     if (res == "success") {
       setState(() {
         isLoading = false;
       });
-      // Navigator.pushNamed(context, "/home");
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
-              mobileScreenLayout: MobileScreenLayout(),
-              webScreenLayout: WebScreenLayout(),
-            ),
-          ),
-          (route) => false);
-    } else {
+      Navigator.pop(context);
       showSnackBar(context, "Password reset email sent");
+    } else {
+      showSnackBar(context, "Something went wrong");
     }
 
     setState(() {
@@ -79,7 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   SizedBox(
                     height: 79,
-                    child: SvgPicture.asset("assets/svgimages/back.svg"),
+                    child: SvgPicture.asset("assets/svgimages/w.svg"),
                   ),
                   const SizedBox(
                     height: 26,
@@ -90,13 +83,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InputTextFields(
+                            icon: const Icon(
+                              Icons.alternate_email,
+                              color: Colors.grey,
+                            ),
                             hinttext: "Email",
                             textEditingController: _emailController,
                             textInputType: TextInputType.emailAddress,
                             isPass: false,
                           ),
                           const SizedBox(
-                            height: 13,
+                            height: 10,
+                          ),
+                          const Text(
+                            '*Password reset link will be sent to the email you provide',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           CustomButtons(
                             buttontext: isLoading
@@ -111,6 +118,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                                 kBody)),
                             onpressed: resetPassword,
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextButton.icon(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                'Back to Login',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))
                         ]),
                   ),
                 ],

@@ -27,11 +27,17 @@ class AddPostScreenState extends State<AddPostScreen> {
       context: parentContext,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text('Create a Post'),
+          title: const Text('Create a Post', style: TextStyle(color: Colors.black),),
           children: <Widget>[
             SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
-                child: const Text('Take a photo'),
+                child: const Row(
+                  children: [
+                    Icon(Icons.add_a_photo),
+                    SizedBox(width: 10,),
+                    Text('Take a photo', style: TextStyle(color: Colors.black),),
+                  ],
+                ),
                 onPressed: () async {
                   Navigator.pop(context);
                   Uint8List file = await pickImage(ImageSource.camera);
@@ -41,7 +47,13 @@ class AddPostScreenState extends State<AddPostScreen> {
                 }),
             SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
-                child: const Text('Choose from Gallery'),
+                child: const Row(
+                  children: [
+                     Icon(Icons.photo_library),
+                    SizedBox(width: 10,),
+                    Text('Choose from Gallery', style: TextStyle(color: Colors.black),),
+                  ],
+                ),
                 onPressed: () async {
                   Navigator.pop(context);
                   Uint8List file = await pickImage(ImageSource.gallery);
@@ -51,7 +63,13 @@ class AddPostScreenState extends State<AddPostScreen> {
                 }),
             SimpleDialogOption(
               padding: const EdgeInsets.all(20),
-              child: const Text("Cancel"),
+              child: const Row(
+                children: [
+                   Icon(Icons.cancel, color: Colors.red,),
+                    SizedBox(width: 10,),
+                   Text("Cancel", style: TextStyle(color: Colors.red),),
+                ],
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -118,8 +136,9 @@ class AddPostScreenState extends State<AddPostScreen> {
     return _file == null
         ? Center(
             child: IconButton(
+              color: Colors.white,
               icon: const Icon(
-                Icons.upload,
+                Icons.upload, size: 40,
               ),
               onPressed: () => _selectImage(context),
             ),
@@ -132,7 +151,7 @@ class AddPostScreenState extends State<AddPostScreen> {
                 onPressed: clearImage,
               ),
               title: const Text(
-                'Post to',
+                'Add Post',
               ),
               centerTitle: false,
               actions: <Widget>[
@@ -175,6 +194,7 @@ class AddPostScreenState extends State<AddPostScreen> {
                       child: TextField(
                         controller: _descriptionController,
                         decoration: const InputDecoration(
+                          hintStyle:TextStyle(color: Colors.grey),
                             hintText: "Write a caption...",
                             border: InputBorder.none),
                         maxLines: 8,

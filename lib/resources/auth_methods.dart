@@ -109,72 +109,87 @@ class AuthMethods {
 
   //reset password
   Future<String> resetPassword({
-  required String email,
-}) async {
-  String res = "Something went wrong";
-  try {
-    if (email.isNotEmpty) {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      res = "success";
-    } else {
-      res = "Please enter your email";
-    }
-  } catch (err) {
-    res = err.toString();
-  }
-  return res;
-}
-
-  //signin with google
-
-  Future<String> signInWithGoogle() async {
+    required String email,
+  }) async {
     String res = "Something went wrong";
-
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
+      if (email.isNotEmpty) {
+        // Check if the user exists
+        var user =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      final UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-
-      final User? user = userCredential.user;
-      if (user != null) {
-        // Check if the user already exists in Firestore
-        final DocumentSnapshot snapshot = await _firestore
-            .collection('users')
-            .doc(user.uid)
-            .get();
-
-        if (!snapshot.exists) {
-          // User is signing in for the first time, create a new user document
-          model.User newUser = model.User(
-            username: user.displayName ?? '',
-            email: user.email ?? '',
-            uid: user.uid,
-            bio: '',
-            followers: [],
-            following: [],
-            photoUrl: user.photoURL ?? '',
-          );
-
-          await _firestore.collection('users').doc(user.uid).set(newUser.toJson());
+        if (user.isNotEmpty) {
+          // User exists, send password reset link
+          await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+          res = "success";
+        } else {
+          // User does not exist, navigate to register screen
+          res = "User does not exist";
+          void navigateToSignupScreen(BuildContext context) {
+            Navigator.pushNamed(context, '/signup');
+          }
         }
-        res = "success";
       } else {
-        res = "Unable to sign in with Google";
+        res = "Please enter your email";
       }
     } catch (err) {
       res = err.toString();
     }
-
     return res;
   }
+
+
+//sign in with google
+  Future<String> signInWithGoogle() async {
+  String res = "Something went wrong";
+
+  try {
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
+
+    final User? user = userCredential.user;
+    if (user != null) {
+      // Check if the user already exists in Firestore
+      final DocumentSnapshot snapshot =
+          await _firestore.collection('users').doc(user.uid).get();
+
+      if (!snapshot.exists) {
+        // User is signing in for the first time, create a new user document
+        model.User newUser = model.User(
+          username: user.displayName ?? '',
+          email: user.email ?? '',
+          uid: user.uid,
+          bio: '',
+          followers: [],
+          following: [],
+          photoUrl: user.photoURL ?? '',
+        );
+
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .set(newUser.toJson());
+      }
+      res = "success";
+    } else {
+      res = "Unable to sign in with Google";
+    }
+  } catch (err) {
+    res = err.toString();
+  }
+
+  return res;
+}
+
 
   //logout
 

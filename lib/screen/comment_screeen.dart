@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:innsta/provider/user_provider.dart';
-import 'package:innsta/utils/app_styles.dart';
-import 'package:innsta/utils/utils.dart';
+import 'package:instagram/provider/user_provider.dart';
+import 'package:instagram/utils/app_styles.dart';
+import 'package:instagram/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../model/user_model.dart';
 import '../resources/firestroe_methods.dart';
-import '../widgets/comments_cards.dart';
+import '../widgets/comments_card.dart';
 
 class CommentScreen extends StatefulWidget {
   const CommentScreen({super.key, required this.postId});
@@ -27,7 +27,7 @@ class _CommentScreenState extends State<CommentScreen> {
           widget.postId, uid, userName, profileImages);
 
       if (res == 'success') {
-        showSnackBar(context, res);
+        showSnackBar(context, 'Comment Posted Successfully!');
 
         setState(() {
           commentEditingController.text = "";
@@ -45,7 +45,7 @@ class _CommentScreenState extends State<CommentScreen> {
     final User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: Colors.black,
           title: const Text("Comments"),
         ),
         body: StreamBuilder(
@@ -88,6 +88,7 @@ class _CommentScreenState extends State<CommentScreen> {
                         child: TextField(
                           controller: commentEditingController,
                           decoration: InputDecoration(
+                            hintStyle: const TextStyle(color: Colors.grey),
                             hintText: 'Comment as ${user.username}',
                             border: InputBorder.none,
                           ),
@@ -100,6 +101,7 @@ class _CommentScreenState extends State<CommentScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 8),
                           child: IconButton(
+                              color: Colors.white,
                               onPressed: () => postComments(
                                   user.uid, user.username, user.photoUrl),
                               icon: const Icon(Icons.send))),

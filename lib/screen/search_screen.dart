@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:innsta/utils/app_styles.dart';
+import 'package:instagram/utils/app_styles.dart';
 
 import 'profile_screen.dart';
 
@@ -19,13 +19,19 @@ class _SearchscreenState extends State<Searchscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
+        toolbarHeight: 100,
+        backgroundColor: Colors.black,
         title: TextFormField(
           controller: serchuserControler,
           decoration: const InputDecoration(
-              hintText: "search a user",
-              labelText: "search for a user ",
-              border: OutlineInputBorder()),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+              hintStyle: TextStyle(color: Colors.grey),
+              hintText: "Search",
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)))),
           onFieldSubmitted: (String _) {
             setState(() {
               isShowUsers = true;

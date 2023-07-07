@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:innsta/model/user_model.dart' as model;
-import 'package:innsta/provider/user_provider.dart';
+import 'package:instagram/model/user_model.dart' as model;
+import 'package:instagram/provider/user_provider.dart';
+import 'package:instagram/screen/notifications_screen.dart';
 
-import 'package:innsta/utils/app_styles.dart';
+import 'package:instagram/utils/app_styles.dart';
 import 'package:provider/provider.dart';
 
 import '../screen/profile_screen.dart';
@@ -56,7 +57,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
             const FeedScreen(),
             const Searchscreen(),
             const AddPostScreen(),
-            const Text("Home"),
+            const NotificationsScreen(),
             ProfileScreen(
               uid: user.uid,
             )
@@ -68,7 +69,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           currentIndex: _page,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              backgroundColor: mobileBackgroundColor,
+              backgroundColor: Colors.black,
               icon: Icon(
                 Icons.home,
                 color: _page == 0 ? kWhite : Colors.grey,
