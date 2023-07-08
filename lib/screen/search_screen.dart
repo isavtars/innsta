@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram/utils/app_styles.dart';
 
 import 'profile_screen.dart';
 
