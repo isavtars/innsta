@@ -256,7 +256,10 @@ class _PostCardState extends State<PostCard> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             ListTile(
-                              leading: const Icon(Icons.repeat, color: Colors.white,),
+                              leading: const Icon(
+                                Icons.repeat,
+                                color: Colors.white,
+                              ),
                               title: const Text('Repost'),
                               onTap: () {
                                 // Handle repost functionality here
@@ -265,8 +268,13 @@ class _PostCardState extends State<PostCard> {
                               },
                             ),
                             ListTile(
-                              leading: const Icon(Icons.share, color: Colors.white,),
-                              title: const Text('Share',),
+                              leading: const Icon(
+                                Icons.share,
+                                color: Colors.white,
+                              ),
+                              title: const Text(
+                                'Share',
+                              ),
                               onTap: () {
                                 // Share the post externally
                                 SocialShare.shareOptions(
