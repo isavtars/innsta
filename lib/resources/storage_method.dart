@@ -7,7 +7,7 @@ class StorageMehods {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //add image as firestore and downlod the url
+  //add image as firestore and download the url
   Future<String> uplodaImages(
       String childName, Uint8List file, bool isPost) async {
     Reference ref =

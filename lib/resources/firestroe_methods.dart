@@ -5,6 +5,8 @@ import 'package:instagram/resources/storage_method.dart';
 import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 
+import '../model/notification_model.dart';
+
 class FirebaseStore {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   var logger = Logger();
@@ -152,4 +154,22 @@ class FirebaseStore {
       logger.e(e.toString());
     }
   }
+
+  Future<void> storeNotification(NotificationModel notification) async {
+  try {
+    // Create a reference to the notifications collection in Firestore
+    final CollectionReference notificationsRef =
+        FirebaseFirestore.instance.collection('notifications');
+
+    // Create a new document with an automatically generated ID
+    await notificationsRef.add({
+      'username': notification.username,
+      'message': notification.message,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+  } catch (error) {
+    // Handle any errors that occur during the notification storing process
+    logger.e('Error storing notification: $error');
+  }
+}
 }
