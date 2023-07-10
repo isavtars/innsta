@@ -52,6 +52,14 @@ class _PostCardState extends State<PostCard> {
   deletePost(String postId) async {
     try {
       await FirebaseStore().deletePost(postId);
+      Navigator.pop(context);
+       // Show a snackbar to indicate successful deletion
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Post deleted successfully"),
+          duration: Duration(seconds: 2),
+        ),
+      );
     } catch (err) {
       showSnackBar(
         context,

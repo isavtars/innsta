@@ -110,6 +110,7 @@ class AuthMethods {
   //reset password
   Future<String> resetPassword({
     required String email,
+    required BuildContext context,
   }) async {
     String res = "Something went wrong";
     try {
@@ -124,10 +125,8 @@ class AuthMethods {
           res = "success";
         } else {
           // User does not exist, navigate to register screen
-          res = "User does not exist";
-          void navigateToSignupScreen(BuildContext context) {
-            Navigator.pushNamed(context, '/signup');
-          }
+          res = "nouser";
+          Navigator.pushNamed(context, '/signup');
         }
       } else {
         res = "Please enter your email";
@@ -138,58 +137,56 @@ class AuthMethods {
     return res;
   }
 
-
 //sign in with google
   Future<String> signInWithGoogle() async {
-  String res = "Something went wrong";
+    String res = "Something went wrong";
 
-  try {
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    final UserCredential userCredential =
-        await _auth.signInWithCredential(credential);
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
 
-    final User? user = userCredential.user;
-    if (user != null) {
-      // Check if the user already exists in Firestore
-      final DocumentSnapshot snapshot =
-          await _firestore.collection('users').doc(user.uid).get();
+      final User? user = userCredential.user;
+      if (user != null) {
+        // Check if the user already exists in Firestore
+        final DocumentSnapshot snapshot =
+            await _firestore.collection('users').doc(user.uid).get();
 
-      if (!snapshot.exists) {
-        // User is signing in for the first time, create a new user document
-        model.User newUser = model.User(
-          username: user.displayName ?? '',
-          email: user.email ?? '',
-          uid: user.uid,
-          bio: '',
-          followers: [],
-          following: [],
-          photoUrl: user.photoURL ?? '',
-        );
+        if (!snapshot.exists) {
+          // User is signing in for the first time, create a new user document
+          model.User newUser = model.User(
+            username: user.displayName ?? '',
+            email: user.email ?? '',
+            uid: user.uid,
+            bio: '',
+            followers: [],
+            following: [],
+            photoUrl: user.photoURL ?? '',
+          );
 
-        await _firestore
-            .collection('users')
-            .doc(user.uid)
-            .set(newUser.toJson());
+          await _firestore
+              .collection('users')
+              .doc(user.uid)
+              .set(newUser.toJson());
+        }
+        res = "success";
+      } else {
+        res = "Unable to sign in with Google";
       }
-      res = "success";
-    } else {
-      res = "Unable to sign in with Google";
+    } catch (err) {
+      res = err.toString();
     }
-  } catch (err) {
-    res = err.toString();
+
+    return res;
   }
-
-  return res;
-}
-
 
   //logout
 

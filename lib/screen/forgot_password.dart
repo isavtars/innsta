@@ -37,7 +37,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       isLoading = true;
     });
     String res = await AuthMethods().resetPassword(
-      email: _emailController.text.trim(),
+      email: _emailController.text.trim(), context: context
     );
 
     if (res == "success") {
@@ -45,9 +45,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         isLoading = false;
       });
       Navigator.pop(context);
-      showSnackBar(context, "Password reset email sent");
-    } else {
-      showSnackBar(context, "Something went wrong");
+      showSnackBar(context, "Password reset email sent successfully");
+    } else if(res == "nouser") {
+      showSnackBar(context, "User not found !");
     }
 
     setState(() {
