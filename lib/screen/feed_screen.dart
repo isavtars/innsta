@@ -21,9 +21,9 @@ class FeedScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         centerTitle: false,
         elevation: 0.1,
-        actions: [
+        actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.favorite_border_outlined)),
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.messenger_outline))
+              onPressed: () {}, icon: const Icon(Icons.message_outlined))
         ],
       ),
       body: StreamBuilder(
