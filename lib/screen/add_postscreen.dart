@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../provider/user_provider.dart';
 import '../resources/firestroe_methods.dart';
-import '../utils/app_styles.dart';
+// import '../utils/app_styles.dart';
 import '../utils/utils.dart';
 
 class AddPostScreen extends StatefulWidget {
