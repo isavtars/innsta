@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram/screen/feed_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -118,6 +119,8 @@ class AddPostScreenState extends State<AddPostScreen> {
       if (res == "success") {
         setState(() {
           isLoading = false;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const FeedScreen()));
         });
         showSnackBar(
           context,
